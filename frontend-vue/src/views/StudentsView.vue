@@ -10,7 +10,7 @@
         
         <select v-model="studentForm.course_id" required>
           <option value="" disabled>Selecciona un curso</option>
-          <option v-for="course in courses" :key="course.id" :value="course.id">
+          <option v-for="course in activeCourses" :key="course.id" :value="course.id">
             {{ course.name }}
           </option>
         </select>
@@ -45,7 +45,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+// MODIFICACIÓN EXAMEN: Añadimos 'computed' a las importaciones
+import { ref, onMounted, computed } from 'vue';
 import api from '../api/axios';
 
 const students = ref([]);
@@ -54,6 +55,11 @@ const isEditing = ref(false);
 const editingId = ref(null);
 
 const studentForm = ref({ name: '', email: '', course_id: '' });
+
+// MODIFICACIÓN EXAMEN: Propiedad computada para filtrar solo cursos activos
+const activeCourses = computed(() => {
+  return courses.value.filter(course => course.status === 'active');
+});
 
 const fetchData = async () => {
   const [resStudents, resCourses] = await Promise.all([
@@ -64,11 +70,10 @@ const fetchData = async () => {
   courses.value = resCourses.data;
 };
 
-// Carga los datos del estudiante en el formulario
 const prepareEdit = (student) => {
   isEditing.value = true;
   editingId.value = student.id;
-  studentForm.value = { ...student }; // Copiamos los datos para no editar el original antes de guardar
+  studentForm.value = { ...student };
 };
 
 const cancelEdit = () => {
@@ -80,16 +85,16 @@ const cancelEdit = () => {
 const handleSubmit = async () => {
   try {
     if (isEditing.value) {
-      // Petición PUT para actualizar
       await api.put(`/students/${editingId.value}`, studentForm.value);
     } else {
-      // Petición POST para crear
       await api.post('/students', studentForm.value);
     }
     cancelEdit();
     fetchData();
   } catch (error) {
-    alert("Error al procesar: " + (error.response?.data?.message || error.message));
+    // MODIFICACIÓN EXAMEN: Capturamos el error 422 y mostramos el mensaje del backend
+    const serverError = error.response?.data?.error || error.response?.data?.message || error.message;
+    alert("Atención: " + serverError);
   }
 };
 
