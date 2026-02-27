@@ -9,17 +9,17 @@ Ha sido diseñado bajo una **arquitectura de microservicios desplegados en la nu
 
 La aplicación se divide en **tres capas independientes**, comunicadas entre sí:
 
-### 🖥️ Frontend (Cara del Usuario)
+### 🖥️ Frontend 
 - Desarrollado con **Vue.js 3** y **Vite**
 - Comunicación con el backend mediante **Axios**
 - Despliegue continuo en **Vercel**
 
-### ⚙️ Backend (Cerebro)
+### ⚙️ Backend 
 - API REST construida con **Laravel 12**
 - Contenerizada usando **Docker**
 - Desplegada en **Render**
 
-### 🗄️ Base de Datos (Memoria)
+### 🗄️ Base de Datos 
 - Motor **MySQL**
 - Base de datos gestionada remotamente en la nube con **Railway**
 
@@ -30,7 +30,7 @@ La aplicación se divide en **tres capas independientes**, comunicadas entre sí
 | Componente            | Tecnología        | Servicio Cloud |
 |----------------------|-------------------|----------------|
 | Interfaz de Usuario  | Vue.js (Vite)     | Vercel         |
-| Lógica de Negocio    | PHP / Laravel 11  | Render (Docker)|
+| Lógica de Negocio    | PHP / Laravel 12  | Render (Docker)|
 | Almacenamiento       | MySQL             | Railway        |
 | Control de Versiones | Git / GitHub      | GitHub         |
 
@@ -117,5 +117,5 @@ Debe usar la URL pública generada por Render:
 https://<tu-backend-render>/api
 ``` 
 
-# 🌍 Enlace del Proyecto
-[Yanira’s Academy en Vercel](https://academia-fullstack-oqf1.vercel.app/)
+## 🌍 Enlace del Proyecto
+## [Yanira’s Academy en Vercel](https://academia-fullstack-oqf1.vercel.app/)
