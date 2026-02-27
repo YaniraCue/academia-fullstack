@@ -10,6 +10,9 @@
   <main>
     <RouterView />
   </main>
+  <footer class="text-center py-4 mt-5 text-gray-600">
+  <p>&copy; 2026 - Desarrollado con ❤️ por Yanira Cue</p>
+</footer>
 </template>
 
 <style>
