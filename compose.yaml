@@ -1,0 +1,35 @@
+services:
+  # Base de Datos MySQL
+  mysql:
+    image: mysql:8.3
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+
+  # Backend Laravel
+  backend:
+    build:
+      context: ./backend-laravel
+      dockerfile: Dockerfile
+    container_name: laravel_api
+    ports:
+      - "8000:8000"
+    # volumes:
+    #   - ./backend-laravel:/var/www/html
+    depends_on:
+      - mysql
+
+  # Frontend Vue
+  frontend:
+    build:
+      context: ./frontend-vue
+      dockerfile: Dockerfile
+    container_name: vue_client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
