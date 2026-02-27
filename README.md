@@ -1,102 +1,121 @@
-# 🎓 Academia CRUD - Laravel & Vue.js (Infraestructura Cloud)
+# 🎓 Yanira’s Academy - Fullstack CRUD
 
-Este proyecto consiste en una **aplicación de gestión académica** desarrollada bajo una **arquitectura desacoplada**, preparada para operar en **entornos profesionales de servidores y contenedores**.
-
-El sistema integra un backend API REST, un frontend SPA y una infraestructura cloud configurada manualmente, priorizando la portabilidad, la seguridad y las buenas prácticas de despliegue.
-
----
-
-## 🛠️ Tecnologías y Arquitectura
-
-### Backend
-- **Laravel 11**
-- Arquitectura **API REST**
-- Gestión de lógica de negocio y persistencia de datos
-
-### Frontend
-- **Vue.js 3**
-- **Vite**
-- Aplicación **SPA (Single Page Application)**
-
-### Base de Datos
-- **SQLite**
-- Base de datos local integrada para:
-  - Máxima portabilidad
-  - Simplicidad en entornos académicos y de pruebas
-  - Persistencia mediante volúmenes Docker
-
-### Infraestructura
-- **Instancia Cloud en OpenStack**
-- **Ubuntu Server 22.04 LTS**
-- Acceso remoto seguro mediante SSH
-
-### Contenedores
-- **Docker**
-- **Docker Compose**
-- Orquestación de servicios y definición de volúmenes
+Este proyecto es una **plataforma de gestión académica integral** que permite administrar **cursos y estudiantes en tiempo real**.  
+Ha sido diseñado bajo una **arquitectura de microservicios desplegados en la nube**, garantizando **alta disponibilidad**, **escalabilidad** y **mantenibilidad**.
 
 ---
 
-## 📝 Objetivos del Proyecto
+## 🚀 Arquitectura del Sistema
 
-### 🔹 Desarrollo Full-Stack
-- Implementación de:
-- Controladores
-- Modelos
-- Rutas
-- Backend en Laravel y frontend reactivo en Vue.js.
+La aplicación se divide en **tres capas independientes**, comunicadas entre sí:
 
-### 🔹 Administración de Sistemas
-- Configuración completa de un servidor Linux.
-- Actualización de repositorios del sistema.
-- Gestión de volúmenes para la persistencia de datos.
+### 🖥️ Frontend (Cara del Usuario)
+- Desarrollado con **Vue.js 3** y **Vite**
+- Comunicación con el backend mediante **Axios**
+- Despliegue continuo en **Vercel**
 
-### 🔹 Orquestación de Servicios
-- Creación manual del archivo `docker-compose.yml`.
-- Uso del editor de terminal **nano**.
-- Definición de volúmenes Docker para la persistencia de la base de datos **SQLite**.
+### ⚙️ Backend (Cerebro)
+- API REST construida con **Laravel 12**
+- Contenerizada usando **Docker**
+- Desplegada en **Render**
 
-### 🔹 Control de Versiones
-- Flujo de trabajo completo con Git:
-- `git add`
-- `git commit`
-- `git push`
-- Clonado remoto (`git clone`) en el servidor cloud.
+### 🗄️ Base de Datos (Memoria)
+- Motor **MySQL**
+- Base de datos gestionada remotamente en la nube con **Railway**
 
 ---
 
-## ⚠️ Registro de Incidencias en el Despliegue
+## 🛠️ Tecnologías Utilizadas
 
-Durante la fase final de puesta en producción en el servidor OpenStack, se realizaron varios intentos de **despliegue automatizado** mediante Docker Compose.
-
-### 🔴 Incidencia Detectada
-- El proceso de construcción de contenedores (`docker-compose build`) no pudo completarse.
-- Causa principal: **ausencia de archivos `Dockerfile`** en el repositorio original.
-
-### 🛠️ Acciones Tomadas
-- Revisión y modificación manual del archivo `docker-compose.yml`.
-- Intentos de reconfiguración utilizando:
-- Imágenes pre-construidas
-- Edición directa mediante **nano**
-- Análisis de errores y depuración en tiempo real desde la consola del servidor.
-
-### 📌 Estado Actual
-- El servidor se encuentra completamente configurado.
-- Las redes y accesos son operativos.
-- El código fuente está correctamente sincronizado.
-- El despliegue final quedó **pausado intencionadamente** para priorizar:
-- La integridad de la lógica de negocio
-- La correcta gestión de la base de datos SQLite
-- Futuras modificaciones del código y del sistema de contenedores.
+| Componente            | Tecnología        | Servicio Cloud |
+|----------------------|-------------------|----------------|
+| Interfaz de Usuario  | Vue.js (Vite)     | Vercel         |
+| Lógica de Negocio    | PHP / Laravel 11  | Render (Docker)|
+| Almacenamiento       | MySQL             | Railway        |
+| Control de Versiones | Git / GitHub      | GitHub         |
 
 ---
 
-## 👩‍💻 Autora
+## 📋 Funcionalidades Clave
 
-**Yanira Cue**
+- 📚 **Gestión de Cursos**
+  - Creación, lectura, edición y eliminación (CRUD) de cursos
+
+- 👩‍🎓 **Gestión de Estudiantes**
+  - Administración completa del alumnado
+  - Datos centralizados en la base de datos
+
+- 🔌 **API RESTful**
+  - Endpoints estandarizados
+  - Comunicación entre frontend y backend mediante **Axios**
 
 ---
 
-## 📄 Licencia
+## 🎓 Despliegue de Yanira’s Academy
 
-Proyecto desarrollado con fines **educativos y académicos**.
+### 🏗️ Paso 1: Configuración de la Base de Datos (Railway)
+El primer paso fue crear el "almacén" de nuestra información. Utilizamos Railway para alojar una base de datos MySQL pública.
+
+Se generaron las credenciales de acceso: Host, Puerto, Usuario y Contraseña.
+
+> Nota: Es vital usar el Public URL o el Host Externo (shinkansen.proxy.rlwy.net) para que servicios fuera de Railway puedan conectarse.
+
+### 🧠 Paso 2: El Backend en la Nube (Laravel + Docker + Render)
+Para el servidor, empaquetamos una API de Laravel 11 en un contenedor Docker para asegurar que funcione igual en cualquier computador.
+
+- **Dockerización:** Creamos un Dockerfile que instala PHP, las dependencias y levanta el servidor en el puerto 8000.
+
+- **Despliegue en Render:** Conectamos el repositorio de GitHub a Render.
+
+- **Variables de Entorno:** Configuramos en el panel de Render todas las llaves de la base de datos para que Laravel pudiera "hablar" con Railway.
+
+>Nota: Incluir el comando php artisan migrate --force en el arranque del contenedor es clave para que las tablas se creen solas sin tener que entrar manualmente a la terminal.
+
+### 🎨 Paso 3: El Frontend y la Conexión (Vue.js + Vercel)
+La interfaz de usuario se construyó con Vue.js 3 y se optimizó para producción.
+
+- **Sincronización de API:** En el archivo src/api/axios.js, cambiamos la dirección de localhost por la URL real de Render (https://academia-backend-7j5n.onrender.com/api).
+
+- **Personalización:** Se modificó el index.html para que el título de la pestaña fuera Yanira´s Academy.
+
+- **Despliegue en Vercel:** Vinculamos la carpeta frontend-vue a Vercel, logrando una carga ultrarrápida y certificados SSL automáticos.
+
+> Nota: Al trabajar con subcarpetas en un mismo repositorio (Monorepo), es fundamental indicar a Vercel cuál es el Root Directory correcto para que el despliegue no falle.
+
+### ✅ Paso 4: Pruebas de Integración
+Finalmente, validamos que todo el ecosistema estuviera conectado:
+
+Al crear un curso en la web (Vercel), la petición viaja a la API (Render) y se guarda permanentemente en la base de datos (Railway).
+
+Si los datos aparecen en la tabla tras refrescar la página, ¡la integración es exitosa!.
+
+## 💡 Notas Importantes (Lecciones Aprendidas)
+
+### 📌 Conexión a la Base de Datos
+Al utilizar servicios externos como **Railway**, es imprescindible configurar correctamente las variables de entorno en **Render**:
+
+- `DB_HOST`
+- `DB_PORT`
+- `DB_PASSWORD`
+
+⚠️ Una mala configuración provocará **errores de conexión interna** entre el backend y la base de datos.
+
+---
+
+### 📌 Automatización con Docker
+Incluir el siguiente comando en el `Dockerfile`:
+
+```bash
+php artisan migrate --force
+```
+
+### 📌 URL Base de Axios
+En entorno de producción, el archivo axios.js del frontend no debe apuntar a localhost.
+Debe usar la URL pública generada por Render:
+
+```bash
+https://<tu-backend-render>/api
+``` 
+
+# 🌍 Enlace del Proyecto
+[Yanira’s Academy en Vercel](https://academia-fullstack-oqf1.vercel.app/)
