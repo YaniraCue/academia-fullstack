@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api', // La URL de tu Laravel en WSL
+    baseURL: 'https://academia-backend-7j5n.onrender.com/api', // La URL de tu Laravel en WSL
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
