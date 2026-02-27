@@ -59,7 +59,7 @@ El primer paso fue crear el "almacén" de nuestra información. Utilizamos Railw
 Se generaron las credenciales de acceso: Host, Puerto, Usuario y Contraseña.
 
 > Nota: Es vital usar el Public URL o el Host Externo (shinkansen.proxy.rlwy.net) para que servicios fuera de Railway puedan conectarse.
-[](img/DBConfig.png)
+![](img/DBConfig.png)
 ### 🧠 Paso 2: El Backend en la Nube (Laravel + Docker + Render)
 Para el servidor, empaquetamos una API de Laravel 11 en un contenedor Docker para asegurar que funcione igual en cualquier computador.
 
@@ -70,7 +70,7 @@ Para el servidor, empaquetamos una API de Laravel 11 en un contenedor Docker par
 - **Variables de Entorno:** Configuramos en el panel de Render todas las llaves de la base de datos para que Laravel pudiera "hablar" con Railway.
 
 >Nota: Incluir el comando php artisan migrate --force en el arranque del contenedor es clave para que las tablas se creen solas sin tener que entrar manualmente a la terminal.
-[](img/configBack.png)
+![](img/configBack.png)
 
 ### 🎨 Paso 3: El Frontend y la Conexión (Vue.js + Vercel)
 La interfaz de usuario se construyó con Vue.js 3 y se optimizó para producción.
@@ -82,14 +82,14 @@ La interfaz de usuario se construyó con Vue.js 3 y se optimizó para producció
 - **Despliegue en Vercel:** Vinculamos la carpeta frontend-vue a Vercel, logrando una carga ultrarrápida y certificados SSL automáticos.
 
 > Nota: Al trabajar con subcarpetas en un mismo repositorio (Monorepo), es fundamental indicar a Vercel cuál es el Root Directory correcto para que el despliegue no falle.
-[](img/configFront.png)
+![](img/configFront.png)
 ### ✅ Paso 4: Pruebas de Integración
 Finalmente, validamos que todo el ecosistema estuviera conectado:
 
 Al crear un curso en la web (Vercel), la petición viaja a la API (Render) y se guarda permanentemente en la base de datos (Railway).
 
 Si los datos aparecen en la tabla tras refrescar la página, ¡la integración es exitosa!.
-[](img/finalResult.png)
+![](img/finalResult.png)
 
 ## 💡 Notas Importantes (Lecciones Aprendidas)
 
